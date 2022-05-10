@@ -7,41 +7,54 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 public class CentroDistribuicaoTest {
+
     @Test
     public void qtdParametroInvalida() {
-        CentroDistribuicao centroDistribuicao = new CentroDistribuicao(400, 9000, 1000, 1000);
-        int[] resp = centroDistribuicao.encomendaCombustivel(-50, CentroDistribuicao.TIPOPOSTO.COMUM);
-        assertEquals(-7, resp[0]);
+        CentroDistribuicao centroDistribuicao = new CentroDistribuicao(1000, 1500, 1500, 1005);
+        int[] resObtida = centroDistribuicao.encomendaCombustivel(-50, CentroDistribuicao.TIPOPOSTO.COMUM);
+        assertEquals(-7, resObtida[0]);
     }
 
     @Test
     public void pedidoNaoPodeSerAtendido() {
-        assertTrue(true);
-    }
-
-    @Test
-    public void semCombustivelSuficiente() {
-        assertTrue(true);
+        CentroDistribuicao centroDistribuicao = new CentroDistribuicao(0, 2000, 200, 6000);
+        int[] resObtida = centroDistribuicao.encomendaCombustivel(-50, CentroDistribuicao.TIPOPOSTO.COMUM);
+        assertEquals(-14, resObtida[0]);
     }
 
     @Test
     public void faltaAditivo() {
-        assertTrue(true);
+        CentroDistribuicao centroDistribuicao = new CentroDistribuicao(400, 9000, 1000, 1000);
+        int[] resObtida = centroDistribuicao.encomendaCombustivel(-50, CentroDistribuicao.TIPOPOSTO.COMUM);
+        assertEquals(-21, resObtida[0]);
     }
 
     @Test
     public void faltaAlcool1() {
-        assertTrue(true);
+        CentroDistribuicao centroDistribuicao = new CentroDistribuicao(400, 9000, 1000, 1000);
+        int[] resObtida = centroDistribuicao.encomendaCombustivel(-50, CentroDistribuicao.TIPOPOSTO.COMUM);
+        assertEquals(-21, resObtida[0]);
     }
 
     @Test
     public void faltaAlcool2() {
-        assertTrue(true);
+        CentroDistribuicao centroDistribuicao = new CentroDistribuicao(400, 9000, 1000, 1000);
+        int[] resObtida = centroDistribuicao.encomendaCombustivel(-50, CentroDistribuicao.TIPOPOSTO.COMUM);
+        assertEquals(-21, resObtida[0]);
     }
 
     @Test
     public void faltaGasolina() {
-        assertTrue(true);
+        CentroDistribuicao centroDistribuicao = new CentroDistribuicao(400, 9000, 1000, 1000);
+        int[] resObtida = centroDistribuicao.encomendaCombustivel(-50, CentroDistribuicao.TIPOPOSTO.COMUM);
+        assertEquals(-21, resObtida[0]);
+    }
+
+    @Test
+    public void qtdAlcoolDiferentes() {//IllegalArgumentException
+        CentroDistribuicao centroDistribuicao = new CentroDistribuicao(400, 9000, 1000, 1000);
+        int[] resObtida = centroDistribuicao.encomendaCombustivel(-50, CentroDistribuicao.TIPOPOSTO.COMUM);
+        assertEquals(-21, resObtida[0]);
     }
 
     @Test
@@ -61,7 +74,8 @@ public class CentroDistribuicaoTest {
 
     @Test
     public void situacaoNormalLimiteOn() {
-        assertTrue(true);
+        CentroDistribuicao centroDistribuicao = new CentroDistribuicao(450, 0, 0, 0);
+        assertEquals(50, centroDistribuicao.recebeAditivo(51));
     }
 
     @Test
@@ -105,22 +119,22 @@ public class CentroDistribuicaoTest {
     }
 
     @Test
-    public void qtdAditivoInvalida() {
+    public void qtdAditivoInvalida() {//IllegalArgumentException
         assertTrue(true);
     }
 
     @Test
-    public void qtdAlcool1Invalida() {
+    public void qtdAlcool1Invalida() {//IllegalArgumentException
         assertTrue(true);
     }
 
     @Test
-    public void qtdAlcool2Invalida() {
+    public void qtdAlcool2Invalida() {//IllegalArgumentException
         assertTrue(true);
     }
 
     @Test
-    public void qtdGasolinaInvalida() {
+    public void qtdGasolinaInvalida() {//IllegalArgumentException
         assertTrue(true);
     }
 
