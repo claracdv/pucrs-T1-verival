@@ -18,22 +18,27 @@ public class CentroDistribuicaoTest {
             "499,9999,1249,1249,NORMAL",
             "249,10000,1250,1250,SOBRAVISO",
             "500,4999,1250,1250,SOBRAVISO",
+            "500,10000,624,1250,INVALID",
+            "500,10000,1250,624,INVALID",
             "124,10000,1250,1250,EMERGENCIA",
-            "500,2499,1250,1250,EMERGENCIA" })
+            "500,2499,1250,1250,EMERGENCIA",
+            "500,10000,312,1250,INVALID",
+            "500,10000,1250,312,INVALID" })
     public void shouldConstructWithStatus(String tAditivo, String tGasolina, String tAlcool1, String tAlcool2,
             String status) {
-        CentroDistribuicao cd = new CentroDistribuicao(Integer.parseInt(tAditivo), Integer.parseInt(tGasolina),
-                Integer.parseInt(tAlcool1), Integer.parseInt(tAlcool2));
-        assertEquals(status, cd.getSituacao().toString());
+        if (status.equalsIgnoreCase("NORMAL") || status.equalsIgnoreCase("SOBRAVISO")
+                || status.equalsIgnoreCase("EMERGENCIA")) {
+            CentroDistribuicao cd = new CentroDistribuicao(Integer.parseInt(tAditivo), Integer.parseInt(tGasolina),
+                    Integer.parseInt(tAlcool1), Integer.parseInt(tAlcool2));
+            assertEquals(status, cd.getSituacao().toString());
+        } else {
+            assertThrows(IllegalArgumentException.class, () -> {
+                new CentroDistribuicao(Integer.parseInt(tAditivo), Integer.parseInt(tGasolina),
+                        Integer.parseInt(tAlcool1), Integer.parseInt(tAlcool2));
+            });
+        }
     }
-/*
-    @ParameterizedTest
-    public void shouldThrowException(String tAditivo, String tGasolina, String tAlcool1, String tAlcool2) {
-        assertThrows(IllegalArgumentException.class, () -> {
-            CentroDistribuicao cd = new CentroDistribuicao(500, 10000, 624, 1250);
-        });
-    }
-*/
+
     @ParameterizedTest
     @CsvSource(value = { "250,5000,625,625,NORMAL",
             "249,10000,1250,1250,SOBRAVISO",
@@ -86,6 +91,7 @@ public class CentroDistribuicaoTest {
                 Integer.parseInt(tAlcool1), Integer.parseInt(tAlcool2));
         int result = cd.recebeAlcool(Integer.parseInt(qtd));
         assertEquals(Integer.parseInt(expected), result);
+
     }
 
     @ParameterizedTest
@@ -99,12 +105,6 @@ public class CentroDistribuicaoTest {
             "250,4000,625,625,2000,ESTRATEGICO,150,2600,375,375",
             "250,2400,625,625,3000,ESTRATEGICO,100,300,250,250",
             "100,2400,625,625,3000,ESTRATEGICO,100,150,250,250",
-            // extras adicionados após code coverage
-            "250,2400,125,1125,3000,ESTRATEGICO,100,300,0,500",
-            "250,2400,1125,125,3000,ESTRATEGICO,100,300,500,0",
-            "500,7000,625,1250,6000,COMUM,200,2800,0,375",
-            "500,7000,1250,625,6000,COMUM,200,2800,375,0",
-            "250,2400,125,1125,10000,ESTRATEGICO,-21,-21,-21,-21",
     })
     public void shouldEncomendFuel(String tAditivo, String tGasolina, String tAlcool1, String tAlcool2, String qtd,
             String posto,
@@ -152,15 +152,9 @@ public class CentroDistribuicaoTest {
     }
 
     @Test
-    public void shouldGetAlcool1() {
-        CentroDistribuicao cd = new CentroDistribuicao(0, 0, 1000, 0);
-        assertEquals(1000, cd.getAlcool1());
-    }
-
-    @Test
-    public void shouldGetAlcool2() {
-        CentroDistribuicao cd = new CentroDistribuicao(0, 0, 0, 1000);
-        assertEquals(1000, cd.getAlcool2());
+    public void shouldGetAlcool() {
+        CentroDistribuicao cd = new CentroDistribuicao(0, 0, 500, 500);
+        assertEquals(1000, cd.getAlcool1() + cd.getAlcool2());
     }
 
     @Test
