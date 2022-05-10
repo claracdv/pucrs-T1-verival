@@ -9,7 +9,9 @@ import org.junit.Test;
 public class CentroDistribuicaoTest {
     @Test
     public void qtdParametroInvalida() {
-        assertTrue(true);
+        CentroDistribuicao centroDistribuicao = new CentroDistribuicao(400, 9000, 1000, 1000);
+        int[] resp = centroDistribuicao.encomendaCombustivel(-50, CentroDistribuicao.TIPOPOSTO.COMUM);
+        assertEquals(-7, resp[0]);
     }
 
     @Test
