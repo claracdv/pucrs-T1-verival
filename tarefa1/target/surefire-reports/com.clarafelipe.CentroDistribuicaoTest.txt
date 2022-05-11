@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.clarafelipe.CentroDistribuicaoTest
+-------------------------------------------------------------------------------
+Tests run: 34, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.099 s - in com.clarafelipe.CentroDistribuicaoTest

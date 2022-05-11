@@ -48,11 +48,15 @@ public class CentroDistribuicao {
   }
 
   public void defineSituacao() {
-    if (tGasolina < (MAX_GASOLINA * 0.25) || tAditivo < (MAX_ADITIVO * 0.25) || tAlcool1 < ((MAX_ALCOOL / 2) * 0.25)
-        || tAlcool2 < ((MAX_ALCOOL / 2) * 0.25)) {
+    if (this.getAditivo() < 0.25 * MAX_ADITIVO ||
+        this.getGasolina() < 0.25 * MAX_GASOLINA ||
+        this.getAlcool1() < 0.25 * MAX_ALCOOL / 2 ||
+        this.getAlcool2() < 0.25 * MAX_ALCOOL / 2) {
       this.situacao = SITUACAO.EMERGENCIA;
-    } else if (tGasolina < (MAX_GASOLINA * 0.5) || tAditivo < (MAX_ADITIVO * 0.5) || tAlcool1 < ((MAX_ALCOOL / 2) * 0.5)
-        || tAlcool2 < ((MAX_ALCOOL / 2) * 0.5)) {
+    } else if (this.getAditivo() < 0.5 * MAX_ADITIVO ||
+        this.getGasolina() < 0.5 * MAX_GASOLINA ||
+        this.getAlcool1() < 0.5 * MAX_ALCOOL / 2 ||
+        this.getAlcool2() < 0.5 * MAX_ALCOOL / 2) {
       this.situacao = SITUACAO.SOBRAVISO;
     } else {
       this.situacao = SITUACAO.NORMAL;
