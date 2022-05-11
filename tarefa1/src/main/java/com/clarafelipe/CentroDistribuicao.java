@@ -21,25 +21,25 @@ public class CentroDistribuicao {
 
   public CentroDistribuicao(int tAditivo, int tGasolina, int tAlcool1, int tAlcool2) {
     if (tAditivo > MAX_ADITIVO)
-      throw new IllegalArgumentException("Valor Inválido!");
+      throw new IllegalArgumentException("INVALID");
     else if (tAditivo < 0)
-      throw new IllegalArgumentException("Valor Inválido!");
+      throw new IllegalArgumentException("INVALID");
     else
       this.tAditivo = tAditivo;
 
     if (tGasolina > MAX_GASOLINA)
-      throw new IllegalArgumentException("Valor Inválido!");
+      throw new IllegalArgumentException("INVALID");
     else if (tGasolina < 0)
-      throw new IllegalArgumentException("Valor Inválido!");
+      throw new IllegalArgumentException("INVALID");
     else
       this.tGasolina = tGasolina;
 
     if (tAlcool1 + tAlcool2 > MAX_ALCOOL)
-      throw new IllegalArgumentException("Valor Inválido!");
+      throw new IllegalArgumentException("INVALID");
     else if (tAlcool1 < 0 || tAlcool2 < 0)
-      throw new IllegalArgumentException("Valor Inválido!");
+      throw new IllegalArgumentException("INVALID");
     else if (tAlcool1 != tAlcool2)
-      throw new IllegalArgumentException("Valor Inválido!");
+      throw new IllegalArgumentException("INVALID");
     else {
       this.tAlcool1 = tAlcool1;
       this.tAlcool2 = tAlcool2;
@@ -83,44 +83,44 @@ public class CentroDistribuicao {
     return this.tAlcool2;
   }
 
-  public int recebeAditivo(int qtdade) {
-    if (qtdade <= 0) {
+  public int recebeAditivo(int qtd) {
+    if (qtd <= 0) {
       return -1;
     }
     int vazio = MAX_ADITIVO - this.tAditivo;
-    if (qtdade <= vazio) {
-      return qtdade;
+    if (qtd <= vazio) {
+      return qtd;
     } else {
       return vazio;
     }
   }
 
-  public int recebeGasolina(int qtdade) {
-    if (qtdade <= 0) {
+  public int recebeGasolina(int qtd) {
+    if (qtd <= 0) {
       return -1;
     }
     int vazio = MAX_GASOLINA - this.tGasolina;
-    if (qtdade <= vazio) {
-      return qtdade;
+    if (qtd <= vazio) {
+      return qtd;
     } else {
       return vazio;
     }
   }
 
-  public int recebeAlcool(int qtdade) {
-    if (qtdade <= 0) {
+  public int recebeAlcool(int qtd) {
+    if (qtd <= 0) {
       return -1;
     }
     int vazio = MAX_ALCOOL - (this.tAlcool1 + this.tAlcool2);
-    if (qtdade <= vazio) {
-      return qtdade;
+    if (qtd <= vazio) {
+      return qtd;
     } else {
       return vazio;
     }
   }
 
-  public int[] encomendaCombustivel(int qtdade, TIPOPOSTO tipoPosto) {
-    if (qtdade <= 0 || (tipoPosto != TIPOPOSTO.COMUM && tipoPosto != TIPOPOSTO.ESTRATEGICO)) {
+  public int[] encomendaCombustivel(int qtd, TIPOPOSTO tipoPosto) {
+    if (qtd <= 0 || (tipoPosto != TIPOPOSTO.COMUM && tipoPosto != TIPOPOSTO.ESTRATEGICO)) {
       return new int[] { -7 };
     }
     if (this.situacao == SITUACAO.EMERGENCIA && tipoPosto == TIPOPOSTO.COMUM) {
@@ -128,19 +128,19 @@ public class CentroDistribuicao {
     }
 
     if (this.situacao == SITUACAO.SOBRAVISO && tipoPosto == TIPOPOSTO.COMUM) {
-      return calculaCombustivel((int) (qtdade * 0.5));
+      return calculaCombustivel((int) (qtd * 0.5));
     }
     if (this.situacao == SITUACAO.EMERGENCIA && tipoPosto == TIPOPOSTO.ESTRATEGICO) {
-      return calculaCombustivelEstrategico(qtdade);
+      return calculaCombustivelEstrategico(qtd);
     }
 
-    return calculaCombustivel(qtdade);
+    return calculaCombustivel(qtd);
   }
 
-  private int[] calculaCombustivel(int qtdade) {
-    double qtdGasolina = qtdade * 0.7;
-    double qtdAlcool = qtdade * 0.25;
-    double qtdAditivo = qtdade * 0.05;
+  private int[] calculaCombustivel(int qtd) {
+    double qtdGasolina = qtd * 0.7;
+    double qtdAlcool = qtd * 0.25;
+    double qtdAditivo = qtd * 0.05;
     if ((int) qtdAditivo > this.tAditivo || (int) qtdAlcool > (this.tAlcool1 + this.tAlcool2)
         || (int) qtdGasolina > this.tGasolina) {
       return new int[] { -21 };
@@ -165,15 +165,15 @@ public class CentroDistribuicao {
     }
   }
 
-  private int[] calculaCombustivelEstrategico(int qtdade) {
-    double qtdGasolina = qtdade * 0.7;
-    double qtdAlcool = qtdade * 0.25;
-    double qtdAditivo = qtdade * 0.05;
+  private int[] calculaCombustivelEstrategico(int qtd) {
+    double qtdGasolina = qtd * 0.7;
+    double qtdAlcool = qtd * 0.25;
+    double qtdAditivo = qtd * 0.05;
     boolean usaAditivo = true;
 
     if ((int) qtdAditivo > this.tAditivo) {
-      qtdGasolina = qtdade * 0.75;
-      qtdAlcool = qtdade * 0.25;
+      qtdGasolina = qtd * 0.75;
+      qtdAlcool = qtd * 0.25;
       usaAditivo = false;
     }
 
