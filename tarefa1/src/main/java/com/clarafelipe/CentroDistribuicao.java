@@ -121,10 +121,10 @@ public class CentroDistribuicao {
 
   public int[] encomendaCombustivel(int qtd, TIPOPOSTO tipoPosto) {
     if (qtd <= 0 || (tipoPosto != TIPOPOSTO.COMUM && tipoPosto != TIPOPOSTO.ESTRATEGICO)) {
-      return new int[] { -7 };
+      return new int[] { -7, 0, 0, 0 };
     }
     if (this.situacao == SITUACAO.EMERGENCIA && tipoPosto == TIPOPOSTO.COMUM) {
-      return new int[] { -14 };
+      return new int[] { -14, 0, 0, 0 };
     }
 
     if (this.situacao == SITUACAO.SOBRAVISO && tipoPosto == TIPOPOSTO.COMUM) {
@@ -143,7 +143,7 @@ public class CentroDistribuicao {
     double qtdAditivo = qtd * 0.05;
     if ((int) qtdAditivo > this.tAditivo || (int) qtdAlcool > (this.tAlcool1 + this.tAlcool2)
         || (int) qtdGasolina > this.tGasolina) {
-      return new int[] { -21 };
+      return new int[] { -21, 0, 0, 0 };
     } else {
       this.tGasolina = this.tGasolina - (int) qtdGasolina;
       this.tAditivo = this.tAditivo - (int) qtdAditivo;
@@ -152,9 +152,9 @@ public class CentroDistribuicao {
       // resto do que mais tem
       double alcoolDivided = qtdAlcool / 2.0;
       if ((int) alcoolDivided > this.tAlcool1) {
-        this.tAlcool2 = this.tAlcool2 - ((int) qtdAlcool - this.tAlcool1);
+        throw new IllegalArgumentException("INVALIDO");
       } else if ((int) alcoolDivided > this.tAlcool2) {
-        this.tAlcool1 = this.tAlcool1 - ((int) qtdAlcool - this.tAlcool2);
+        throw new IllegalArgumentException("INVALIDO");
       } else {
         this.tAlcool1 = this.tAlcool1 - (int) alcoolDivided;
         this.tAlcool2 = this.tAlcool2 - (int) alcoolDivided;
@@ -176,7 +176,7 @@ public class CentroDistribuicao {
     }
 
     if ((int) qtdAlcool > (this.tAlcool1 + this.tAlcool2) || (int) qtdGasolina > this.tGasolina) {
-      return new int[] { -21 };
+      return new int[] { -21, 0, 0, 0 };
     } else {
       if (usaAditivo)
         this.tAditivo = this.tAditivo - (int) qtdAditivo;
@@ -186,9 +186,9 @@ public class CentroDistribuicao {
       // resto do que mais tem
       double alcoolDivided = qtdAlcool / 2.0;
       if ((int) alcoolDivided > this.tAlcool1) {
-        this.tAlcool2 = this.tAlcool2 - ((int) qtdAlcool - this.tAlcool1);
+        throw new IllegalArgumentException("INVALIDO");
       } else if ((int) alcoolDivided > this.tAlcool2) {
-        this.tAlcool1 = this.tAlcool1 - ((int) qtdAlcool - this.tAlcool2);
+        throw new IllegalArgumentException("INVALIDO");
       } else {
         this.tAlcool1 = this.tAlcool1 - (int) alcoolDivided;
         this.tAlcool2 = this.tAlcool2 - (int) alcoolDivided;

@@ -3,7 +3,6 @@ package com.clarafelipe;
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -118,11 +117,11 @@ public class CentroDistribuicaoTest {
 
     @ParameterizedTest
     @CsvSource(value = {
-            "500,10000,1250,1250,0,COMUM,-7,-7,-7,-7",
-            "500,10000,1250,1250,20000,COMUM,-21,-21,-21,-21",
+            "500,10000,1250,1250,0,COMUM,-7,0,0,0",
+            "500,10000,1250,1250,20000,COMUM,-21,0,0,0",
             "500,10000,1250,1250,7650,COMUM,118,4645,294,294",
             "250,4000,625,625,2000,COMUM,200,3300,500,500",
-            "250,2400,625,625,3000,COMUM,-14,-14,-14,-14",
+            "250,2400,625,625,3000,COMUM,-14,0,0,0",
             "500,10000,1250,1250,7650,ESTRATEGICO,118,4645,294,294",
             "250,4000,625,625,2000,ESTRATEGICO,150,2600,375,375",
             "250,2400,625,625,3000,ESTRATEGICO,100,300,250,250",
@@ -136,14 +135,12 @@ public class CentroDistribuicaoTest {
                 Integer.parseInt(tAlcool1), Integer.parseInt(tAlcool2));
         TIPOPOSTO tipoPosto;
 
-        // MAP THE TIPOPOSTO VARIABLE
         if (posto.equals("ESTRATEGICO")) {
             tipoPosto = CentroDistribuicao.TIPOPOSTO.ESTRATEGICO;
         } else {
             tipoPosto = CentroDistribuicao.TIPOPOSTO.COMUM;
         }
 
-        // CHECK ARRAY SIZE
         int tamanho = 0;
         if (Integer.parseInt(expected1) < 0) {
             tamanho = 1;
@@ -151,7 +148,6 @@ public class CentroDistribuicaoTest {
             tamanho = 4;
         }
 
-        // CREATE ARRAY WITH THE RIGHT SIZE
         int[] expected = new int[tamanho];
         if (Integer.parseInt(expected1) < 0) {
             expected = new int[] { Integer.parseInt(expected1) };
@@ -160,42 +156,9 @@ public class CentroDistribuicaoTest {
                     Integer.parseInt(expected3), Integer.parseInt(expected4) };
         }
 
-        // CALLS FUNCTION AND ASSERTS IT
         int[] result = centroDistribuicao.encomendaCombustivel(Integer.parseInt(qtd), tipoPosto);
         for (int i = 0; i < expected.length; i++) {
             assertEquals(expected[i], result[i]);
         }
     }
-
-    // testes adicionados após code coverage
-
-    @ParameterizedTest
-    @CsvSource(value = {
-            "500,10000,1250,1250,0,COMUM,-7,-7,-7,-7",
-            "500,10000,1250,1250,20000,COMUM,-21,-21,-21,-21",
-            "500,10000,1250,1250,7650,COMUM,118,4645,294,294",
-            "250,4000,625,625,2000,COMUM,200,3300,500,500",
-            "250,2400,625,625,3000,COMUM,-14,-14,-14,-14",
-            "500,10000,1250,1250,7650,ESTRATEGICO,118,4645,294,294",
-            "250,4000,625,625,2000,ESTRATEGICO,150,2600,375,375",
-            "250,2400,625,625,3000,ESTRATEGICO,100,300,250,250",
-            "100,2400,625,625,3000,ESTRATEGICO,100,150,250,250",
-    })
-    public void shouldGetGasolina() {
-        CentroDistribuicao centroDistribuicao = new CentroDistribuicao(0, 2000, 0, 0);
-        assertEquals(2000, centroDistribuicao.getGasolina());
-    }
-
-    @Test
-    public void shouldGetAlcool() {
-        CentroDistribuicao centroDistribuicao = new CentroDistribuicao(0, 0, 1000, 1000);
-        assertEquals(1000, centroDistribuicao.getAlcool1());
-    }
-
-    @Test
-    public void shouldGetAditivo() {
-        CentroDistribuicao centroDistribuicao = new CentroDistribuicao(150, 0, 0, 0);
-        assertEquals(150, centroDistribuicao.getAditivo());
-    }
-
 }
