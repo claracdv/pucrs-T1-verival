@@ -21,25 +21,25 @@ public class CentroDistribuicao {
 
   public CentroDistribuicao(int tAditivo, int tGasolina, int tAlcool1, int tAlcool2) {
     if (tAditivo > MAX_ADITIVO)
-      throw new IllegalArgumentException("INVALID");
+      throw new IllegalArgumentException("INVALIDO");
     else if (tAditivo < 0)
-      throw new IllegalArgumentException("INVALID");
+      throw new IllegalArgumentException("INVALIDO");
     else
       this.tAditivo = tAditivo;
 
     if (tGasolina > MAX_GASOLINA)
-      throw new IllegalArgumentException("INVALID");
+      throw new IllegalArgumentException("INVALIDO");
     else if (tGasolina < 0)
-      throw new IllegalArgumentException("INVALID");
+      throw new IllegalArgumentException("INVALIDO");
     else
       this.tGasolina = tGasolina;
 
     if (tAlcool1 + tAlcool2 > MAX_ALCOOL)
-      throw new IllegalArgumentException("INVALID");
+      throw new IllegalArgumentException("INVALIDO");
     else if (tAlcool1 < 0 || tAlcool2 < 0)
-      throw new IllegalArgumentException("INVALID");
+      throw new IllegalArgumentException("INVALIDO");
     else if (tAlcool1 != tAlcool2)
-      throw new IllegalArgumentException("INVALID");
+      throw new IllegalArgumentException("INVALIDO");
     else {
       this.tAlcool1 = tAlcool1;
       this.tAlcool2 = tAlcool2;

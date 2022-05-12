@@ -3,6 +3,7 @@ package com.clarafelipe;
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import org.junit.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -16,21 +17,33 @@ public class CentroDistribuicaoTest {
             "499,9999,1249,1249,NORMAL",
             "249,10000,1250,1250,SOBRAVISO",
             "500,4999,1250,1250,SOBRAVISO",
-            "500,10000,624,1250,INVALID",
-            "500,10000,1250,624,INVALID",
+            "500,10000,624,1250,INVALIDO",
+            "500,10000,1250,624,INVALIDO",
             "124,10000,1250,1250,EMERGENCIA",
             "500,2499,1250,1250,EMERGENCIA",
-            "500,10000,312,1250,INVALID",
-            "500,10000,1250,312,INVALID" })
+            "500,10000,312,1250,INVALIDO",
+            "500,10000,1250,312,INVALIDO",
+            "500,10000,1250,2000,INVALIDO", // adicionado após code coverage
+            "500,15000,1250,312,INVALIDO", // adicionado após code coverage
+            "1500,10000,1250,312,INVALIDO", // adicionado após code coverage
+            "-5,10000,1250,312,INVALIDO", // adicionado após code coverage
+            "500,-10,1250,312,INVALIDO", // adicionado após code coverage
+            "500,10000,-12,312,INVALIDO", // adicionado após code coverage
+            "500,10000,1250,-12,INVALIDO" }) // adicionado após code coverage
     public void shouldConstructWithStatus(String tAditivo, String tGasolina, String tAlcool1, String tAlcool2,
             String status) {
-        if (Integer.parseInt(tAlcool1) != Integer.parseInt(tAlcool2)) {
+        if (Integer.parseInt(tAditivo) > 500
+                || Integer.parseInt(tAditivo) < 0 || Integer.parseInt(tGasolina) > 10000
+                || Integer.parseInt(tGasolina) < 0 || Integer.parseInt(tAlcool1) < 0 || Integer.parseInt(tAlcool2) < 0
+                || (Integer.parseInt(tAlcool1) + Integer.parseInt(tAlcool2)) > 2500
+                || Integer.parseInt(tAlcool1) != Integer.parseInt(tAlcool2)) {
             assertThrows(IllegalArgumentException.class, () -> {
                 new CentroDistribuicao(Integer.parseInt(tAditivo), Integer.parseInt(tGasolina),
                         Integer.parseInt(tAlcool1), Integer.parseInt(tAlcool2));
             });
         } else {
-            CentroDistribuicao centroDistribuicao = new CentroDistribuicao(Integer.parseInt(tAditivo), Integer.parseInt(tGasolina),
+            CentroDistribuicao centroDistribuicao = new CentroDistribuicao(Integer.parseInt(tAditivo),
+                    Integer.parseInt(tGasolina),
                     Integer.parseInt(tAlcool1), Integer.parseInt(tAlcool2));
             assertEquals(status, centroDistribuicao.getSituacao().toString());
         }
@@ -42,7 +55,8 @@ public class CentroDistribuicaoTest {
             "124,10000,1250,1250,EMERGENCIA" })
     public void shouldDefineSituation(String tAditivo, String tGasolina, String tAlcool1, String tAlcool2,
             String status) {
-        CentroDistribuicao centroDistribuicao = new CentroDistribuicao(Integer.parseInt(tAditivo), Integer.parseInt(tGasolina),
+        CentroDistribuicao centroDistribuicao = new CentroDistribuicao(Integer.parseInt(tAditivo),
+                Integer.parseInt(tGasolina),
                 Integer.parseInt(tAlcool1), Integer.parseInt(tAlcool2));
         centroDistribuicao.defineSituacao();
         assertEquals(status, centroDistribuicao.getSituacao().toString());
@@ -56,7 +70,8 @@ public class CentroDistribuicaoTest {
             "400,5000,625,625,0,-1" })
     public void shouldReceiveAdictive(String tAditivo, String tGasolina, String tAlcool1, String tAlcool2, String qtd,
             String expected) {
-        CentroDistribuicao centroDistribuicao = new CentroDistribuicao(Integer.parseInt(tAditivo), Integer.parseInt(tGasolina),
+        CentroDistribuicao centroDistribuicao = new CentroDistribuicao(Integer.parseInt(tAditivo),
+                Integer.parseInt(tGasolina),
                 Integer.parseInt(tAlcool1), Integer.parseInt(tAlcool2));
         int result = centroDistribuicao.recebeAditivo(Integer.parseInt(qtd));
         assertEquals(Integer.parseInt(expected), result);
@@ -70,7 +85,8 @@ public class CentroDistribuicaoTest {
             "400,8000,625,625,0,-1" })
     public void shouldReceiveGasoline(String tAditivo, String tGasolina, String tAlcool1, String tAlcool2, String qtd,
             String expected) {
-        CentroDistribuicao centroDistribuicao = new CentroDistribuicao(Integer.parseInt(tAditivo), Integer.parseInt(tGasolina),
+        CentroDistribuicao centroDistribuicao = new CentroDistribuicao(Integer.parseInt(tAditivo),
+                Integer.parseInt(tGasolina),
                 Integer.parseInt(tAlcool1), Integer.parseInt(tAlcool2));
         int result = centroDistribuicao.recebeGasolina(Integer.parseInt(qtd));
         assertEquals(Integer.parseInt(expected), result);
@@ -92,7 +108,8 @@ public class CentroDistribuicaoTest {
                         Integer.parseInt(tAlcool1), Integer.parseInt(tAlcool2));
             });
         } else {
-            CentroDistribuicao centroDistribuicao = new CentroDistribuicao(Integer.parseInt(tAditivo), Integer.parseInt(tGasolina),
+            CentroDistribuicao centroDistribuicao = new CentroDistribuicao(Integer.parseInt(tAditivo),
+                    Integer.parseInt(tGasolina),
                     Integer.parseInt(tAlcool1), Integer.parseInt(tAlcool2));
             int result = centroDistribuicao.recebeAlcool(Integer.parseInt(qtd));
             assertEquals(Integer.parseInt(expected), result);
@@ -114,7 +131,8 @@ public class CentroDistribuicaoTest {
     public void shouldEncomendFuel(String tAditivo, String tGasolina, String tAlcool1, String tAlcool2, String qtd,
             String posto,
             String expected1, String expected2, String expected3, String expected4) {
-        CentroDistribuicao centroDistribuicao = new CentroDistribuicao(Integer.parseInt(tAditivo), Integer.parseInt(tGasolina),
+        CentroDistribuicao centroDistribuicao = new CentroDistribuicao(Integer.parseInt(tAditivo),
+                Integer.parseInt(tGasolina),
                 Integer.parseInt(tAlcool1), Integer.parseInt(tAlcool2));
         TIPOPOSTO tipoPosto;
 
@@ -148,4 +166,31 @@ public class CentroDistribuicaoTest {
             assertEquals(expected[i], result[i]);
         }
     }
+
+    // testes adicionados após code coverage
+
+    @Test
+    public void shouldGetGasolina() {
+        CentroDistribuicao centroDistribuicao = new CentroDistribuicao(0, 2000, 0, 0);
+        assertEquals(2000, centroDistribuicao.getGasolina());
+    }
+
+    @Test
+    public void shouldGetAlcool1() {
+        CentroDistribuicao centroDistribuicao = new CentroDistribuicao(0, 0, 1000, 0);
+        assertEquals(1000, centroDistribuicao.getAlcool1());
+    }
+
+    @Test
+    public void shouldGetAlcool2() {
+        CentroDistribuicao centroDistribuicao = new CentroDistribuicao(0, 0, 0, 1000);
+        assertEquals(1000, centroDistribuicao.getAlcool2());
+    }
+
+    @Test
+    public void shouldGetAditivo() {
+        CentroDistribuicao centroDistribuicao = new CentroDistribuicao(150, 0, 0, 0);
+        assertEquals(150, centroDistribuicao.getAditivo());
+    }
+
 }
