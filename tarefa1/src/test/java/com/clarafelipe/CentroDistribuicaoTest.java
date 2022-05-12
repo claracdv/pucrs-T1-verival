@@ -169,22 +169,27 @@ public class CentroDistribuicaoTest {
 
     // testes adicionados após code coverage
 
-    @Test
+    @ParameterizedTest
+    @CsvSource(value = {
+            "500,10000,1250,1250,0,COMUM,-7,-7,-7,-7",
+            "500,10000,1250,1250,20000,COMUM,-21,-21,-21,-21",
+            "500,10000,1250,1250,7650,COMUM,118,4645,294,294",
+            "250,4000,625,625,2000,COMUM,200,3300,500,500",
+            "250,2400,625,625,3000,COMUM,-14,-14,-14,-14",
+            "500,10000,1250,1250,7650,ESTRATEGICO,118,4645,294,294",
+            "250,4000,625,625,2000,ESTRATEGICO,150,2600,375,375",
+            "250,2400,625,625,3000,ESTRATEGICO,100,300,250,250",
+            "100,2400,625,625,3000,ESTRATEGICO,100,150,250,250",
+    })
     public void shouldGetGasolina() {
         CentroDistribuicao centroDistribuicao = new CentroDistribuicao(0, 2000, 0, 0);
         assertEquals(2000, centroDistribuicao.getGasolina());
     }
 
     @Test
-    public void shouldGetAlcool1() {
-        CentroDistribuicao centroDistribuicao = new CentroDistribuicao(0, 0, 1000, 0);
+    public void shouldGetAlcool() {
+        CentroDistribuicao centroDistribuicao = new CentroDistribuicao(0, 0, 1000, 1000);
         assertEquals(1000, centroDistribuicao.getAlcool1());
-    }
-
-    @Test
-    public void shouldGetAlcool2() {
-        CentroDistribuicao centroDistribuicao = new CentroDistribuicao(0, 0, 0, 1000);
-        assertEquals(1000, centroDistribuicao.getAlcool2());
     }
 
     @Test

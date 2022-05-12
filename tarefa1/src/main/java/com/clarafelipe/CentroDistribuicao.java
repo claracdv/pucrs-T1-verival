@@ -153,10 +153,8 @@ public class CentroDistribuicao {
       double alcoolDivided = qtdAlcool / 2.0;
       if ((int) alcoolDivided > this.tAlcool1) {
         this.tAlcool2 = this.tAlcool2 - ((int) qtdAlcool - this.tAlcool1);
-        this.tAlcool1 = 0;
       } else if ((int) alcoolDivided > this.tAlcool2) {
         this.tAlcool1 = this.tAlcool1 - ((int) qtdAlcool - this.tAlcool2);
-        this.tAlcool2 = 0;
       } else {
         this.tAlcool1 = this.tAlcool1 - (int) alcoolDivided;
         this.tAlcool2 = this.tAlcool2 - (int) alcoolDivided;
@@ -189,10 +187,8 @@ public class CentroDistribuicao {
       double alcoolDivided = qtdAlcool / 2.0;
       if ((int) alcoolDivided > this.tAlcool1) {
         this.tAlcool2 = this.tAlcool2 - ((int) qtdAlcool - this.tAlcool1);
-        this.tAlcool1 = 0;
       } else if ((int) alcoolDivided > this.tAlcool2) {
         this.tAlcool1 = this.tAlcool1 - ((int) qtdAlcool - this.tAlcool2);
-        this.tAlcool2 = 0;
       } else {
         this.tAlcool1 = this.tAlcool1 - (int) alcoolDivided;
         this.tAlcool2 = this.tAlcool2 - (int) alcoolDivided;
